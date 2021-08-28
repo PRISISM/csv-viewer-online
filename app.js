@@ -14,6 +14,10 @@ input.onchange = function () {
       skipEmptyLines: true
     })
 
+    data.data.forEach(e => {
+      e.text = e.text.replace('\\n', '<br/>');
+    });
+
     // reset container
     handsontableContainer.innerHTML = ''
     handsontableContainer.className = ''
@@ -21,8 +25,12 @@ input.onchange = function () {
     Handsontable(handsontableContainer, {
       data: data.data,
       rowHeaders: true,
-      colHeaders: data.meta.fields,
-      columnSorting: true
+      colHeaders: ['Name', 'Text', 'Translation'],
+      columnSorting: true,
+      columns: [
+        {data: 'name'},
+        {data: 'text', renderer:'html'}
+      ]
     })
   }
 
